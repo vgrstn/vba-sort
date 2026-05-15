@@ -10,6 +10,17 @@ Uses a **hybrid QuickSort + InsertionSort** algorithm (threshold 47, as used by 
 
 ---
 
+## 📁 Files
+
+| File | Description |
+|---|---|
+| `Sort.bas` | Source file with [Rubberduck](https://rubberduckvba.com/) annotations (`'@Description`, `'@IgnoreModule`) |
+| `Sort_WithAttributes.bas` | Ready-to-import version with VB attributes baked in — no Rubberduck required |
+
+Both files are identical in behaviour. Import `Sort_WithAttributes.bas` if you are not using Rubberduck.
+
+---
+
 ## 📦 Features
 
 - **In-place or by-index** — sort and search either modify the array directly or operate through a `Long()` index array, leaving the original untouched
