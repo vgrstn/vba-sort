@@ -665,6 +665,7 @@ Private Function IsVector(ByRef var As Variant) As Boolean
 
     Dim Lo As Long, Hi As Long
     On Error Resume Next
+    '@Ignore AssignmentNotUsed
     Lo = LBound(var, 2)
     If Err.Number = 0 Then Exit Function
     Err.Clear

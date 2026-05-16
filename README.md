@@ -173,6 +173,32 @@ Next
 
 The Durstenfeld variant: at step `i`, a random position in `[lower, i]` is chosen and swapped with `i`. Every permutation is equally likely, O(n). The `lower +` offset handles arbitrary array bases correctly.
 
+### Descending sort via `ReverseArray`
+
+`SortArray` always sorts ascending internally. When `asc = False`, the result is reversed in a single O(n) pass after the sort:
+
+```vb
+QuickSortInPlace arr
+If asc = False Then ReverseArray arr
+```
+
+`ReverseArray` uses the mirror-index formula `offset - i` where `offset = LBound + UBound`, handling arbitrary array bases correctly. The sort algorithm itself has no knowledge of direction; descending is a post-process concern.
+
+### `IsVector` — two-probe detection
+
+`IsVector` uses two targeted `LBound` calls rather than a counting loop:
+
+```vb
+Lo = LBound(var, 2)              ' succeeds → multi-dimensional → not a vector
+If Err.Number = 0 Then Exit Function
+Err.Clear
+Lo = LBound(var, 1)
+Hi = UBound(var, 1)
+If Err.Number = 0 Then IsVector = (Lo <= Hi)
+```
+
+Probe 1 confirms the array is not multi-dimensional; probe 2 confirms dimension 1 exists and is non-empty. The `'@Ignore AssignmentNotUsed` inline annotation covers the intentionally discarded result from probe 1.
+
 ### `IsIndexArray` validation
 
 Before any by-index operation, the index array is validated in O(n): same length as `arr`, all values within `[LBound(arr), UBound(arr)]`, each used exactly once (checked via a Boolean bitmap). An invalid index array raises `vbErrorInvalidProcedureCall (5)`.
